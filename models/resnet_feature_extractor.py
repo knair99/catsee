@@ -30,7 +30,7 @@ class ResNetWithTransformer:
         return features.flatten().numpy()
 
     def extract_features_with_transformer(self, image_path):
-        image = Image.open(image_path)  # Load the image
+        image = Image.open(image_path).convert('RGB')  # Load the image
         image = self.transform(image).unsqueeze(0)  # Add batch dimension
         with torch.no_grad():  # Disable gradient calculation
             features = self.model(image)  # Extract features
@@ -40,6 +40,24 @@ class ResNetWithTransformer:
         transformed_features = self.transformer(features, features)  # Self-attention mechanism
 
         return transformed_features.flatten().detach().numpy()  # Detach from graph and convert to NumPy
+
+    def extract_features_with_transformer_spatial_only(self, image_path):
+        # Load and preprocess image
+        image = Image.open(image_path).convert('RGB')
+        image = self.transform(image).unsqueeze(0)
+
+        # Extract spatial features from ResNet
+        with torch.no_grad():
+            spatial_features = self.model(image)  # Keep spatial dimensions (e.g., 7x7 grid)
+
+        # Reshape spatial features for the transformer (sequence_length, batch_size, embedding_size)
+        B, C, H, W = spatial_features.size()  # Batch, Channels, Height, Width
+        spatial_features = spatial_features.view(B, C, -1).permute(2, 0, 1)  # (H*W, B, C)
+
+        # Apply transformer
+        transformed_features = self.transformer(spatial_features, spatial_features)
+
+        return transformed_features.flatten().detach().numpy()  # Flatten and return
 
 
 def retrieve_oxford_feature_dataset():
