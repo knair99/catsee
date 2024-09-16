@@ -1,13 +1,16 @@
 import torch
-from torchvision import models, transforms
 from PIL import Image
+from torch import nn
+from torchvision import models, transforms
 
 
-class ResnetFeatureExtractor:
+class ResNetWithTransformer:
     def __init__(self):
         self.model = models.resnet18(pretrained=True)  # Load the pre-trained model
         self.model = torch.nn.Sequential(*(list(self.model.children())[:-1]))  # Remove the last layer
-        self.model.eval()
+
+        # Define a transformer for further processing the extracted features
+        self.transformer = nn.Transformer(nhead=4, num_encoder_layers=2)  # Basic transformer setup
         self.transform = transforms.Compose([  # Define the image transformations
             transforms.Resize((224, 224)),  # Resize the image
             transforms.ToTensor(),  # Convert to PyTorch tensor
@@ -19,4 +22,10 @@ class ResnetFeatureExtractor:
         image = self.transform(image).unsqueeze(0)  # Add batch dimension
         with torch.no_grad():  # Disable gradient calculation
             features = self.model(image)  # Extract features
-        return features.squeeze().numpy()  # Remove batch dimension and convert to NumPy array for CatBoost
+
+        # Transform the features using the transformer
+        features = features.view(1, -1, features.size(1))  # Reshape for transformer input
+        transformed_features = self.transformer(features, features)  # Self-attention mechanism
+
+        return transformed_features.flatten().detach().numpy()  # Detach from graph and convert to NumPy
+
