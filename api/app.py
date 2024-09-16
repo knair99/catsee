@@ -27,7 +27,10 @@ def classify_image():
     # Now classify the image using the saved path
     prediction = classifier.classify(file_path)
 
-    return jsonify({'class_id': int(prediction)}), 200
+    # Return the prediction
+    species = "cat" if int(prediction) == 1 else "dog"
+
+    return jsonify({'species': species}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

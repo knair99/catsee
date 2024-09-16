@@ -7,7 +7,7 @@ class ImageClassifierWithCatBoost:
     def __init__(self):
         self.feature_extractor = ResNetWithTransformer()
         self.catboost_model = CatBoostClassifier()
-        self.catboost_model.load_model('/Users/kprasad/repos/catsee/models/catboost_model.cbm')
+        self.catboost_model.load_model('/Users/kprasad/repos/catsee/models/catboost_pet_classifier.cbm')
 
     def classify(self, image_path):
         features = self.feature_extractor.extract_features(image_path)

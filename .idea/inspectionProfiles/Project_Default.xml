@@ -108,7 +108,21 @@
     <inspection_tool class="HtmlUnknownAnchorTarget" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="HtmlUnknownAttribute" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="HtmlUnknownBooleanAttribute" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="HtmlUnknownTag" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="HtmlUnknownTag" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="myValues">
+        <value>
+          <list size="6">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
     <inspection_tool class="HtmlUnknownTarget" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="HtmlWrongAttributeValue" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="IncompatibleMaskJS" enabled="false" level="WARNING" enabled_by_default="false" />
@@ -217,6 +231,13 @@
     <inspection_tool class="Puppet4Deprecations" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="PuppetMultipleHashSetParamsPerResourceInstance" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="PuppetUnresolved" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N806" />
+        </list>
+      </option>
+    </inspection_tool>
     <inspection_tool class="PyStubPackagesAdvertiser" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <list>
